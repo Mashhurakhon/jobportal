@@ -161,7 +161,7 @@ input[type="confirm password"] {
   }
   else{
     ?>
-    <input type="username" id="username" name="username" required><br>
+    <input type="text" id="username" name="username" required><br>
     <?php 
     } ?>
     <?php  

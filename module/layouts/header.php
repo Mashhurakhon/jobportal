@@ -30,11 +30,23 @@
                                 </ul>
                             </nav>
                         </div>          
-                        <!-- Header-btn -->
-                        <div class="header-btn d-none f-right d-lg-block">
-                            <a href="#" class="btn head-btn1">Register</a>
-                            <a href="#" class="btn head-btn2">Login</a>
-                        </div>
+                        <?php  
+                                   if (isset($_SESSION["username"]) && !empty($_SESSION["username"])) {
+                                       echo "
+                                       <div class='main-menu'>
+                                    <nav class='d-none d-lg-block'>
+                                        <ul id='navigation'>
+                                            <li><a href='profile.php'>{$_SESSION["username"]}</a></li>
+                                            <li><a href='1.php'>Out</a></li>
+                                            </ul></div></div>";
+                                       
+                                   }
+                                   else{
+                                    echo "<div class='header-btn d-none f-right d-lg-block'>";
+                                       echo "<a href='signin.php' class='btn head-btn1'>Register</a>";
+                                   echo "<a href='signup.php' class='btn head-btn2'>Login</a></div>";
+                                   }
+                                   ?>
                     </div>
                 </div>
                 <!-- Mobile Menu -->

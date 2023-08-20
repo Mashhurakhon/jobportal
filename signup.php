@@ -5,19 +5,20 @@ $conn = mysqli_connect('localhost','root','', 'employment');
   $name=$_POST['username'];
   $pass = $_POST['pass'];
   $r=mysqli_query($conn,"SELECT * FROM users WHERE fullname = '$name'");
-  $r1 = mysqli_query($conn,"SELECT * FROM users WHERE fullname = '$name' AND password = '$pass'");
   $error_message = "";
     if(mysqli_num_rows($r)){
-      if(mysqli_num_rows($r1)) {
-        $_SESSION['username']=$_POST['username'];
-        header("Location: index.php");
-      }
-      else{
-        $error_message = "<h5>Неверный пароль!</h5>";
-      }
+      $error_message = "<h6>Такой логин уже существует!</h6>";
     }
     else{
-      $error_message = "<h5>Такого пользователя нет!</h5>";
+      if($pass == $_POST['cp']){
+    $email=$_POST["email"];
+    $_SESSION['username']=$_POST['username'];
+  $r= mysqli_query($conn,"INSERT INTO `users`(`fullname`, `password`, `email`) VALUES ('$name','$pass','$email')");
+       header("Location: index.php");
+      }
+      else{
+        $error_message = "<h6>Неверное подтверждение пароля!</h6>";
+      }
     }
   }
   ?>
@@ -46,23 +47,23 @@ $conn = mysqli_connect('localhost','root','', 'employment');
             <link rel="stylesheet" href="assets/css/nice-select.css">
             <link rel="stylesheet" href="assets/css/style.css">
 <style>
-  h5{
-    color: red;
-  }
        body {
   font-family: Arial, sans-serif;
   background-color: #f2f2f2;
   color: #13083b;
   padding: 20px;
 }
-h6{
-  text-align: right;
-  color: blue;
-}
+
 h1 {
   text-align: center;
 }
-
+h6{
+    color: red;
+  }
+.msg{
+  color: red;
+  font-size: 0.7em;
+}
 form {
   max-width: 400px;
   margin: 0 auto;
@@ -79,7 +80,7 @@ label {
 }
 
 input[type="text"],
-input[type="username"],
+input[type="email"],
 input[type="password"],
 input[type="confirm password"] {
   width: 100%;
@@ -112,7 +113,7 @@ input[type="confirm password"] {
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.php"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>  
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -148,27 +149,39 @@ input[type="confirm password"] {
        </div>
         <!-- Header End -->
     </header>
-  <h1>Войти</h1>
+  <h1>Регистрация</h1>
  <div>
   <form action="signup.php" method="POST">
-    <label for="username">Имя пользователя:</label>
-    <?php  
+    <label for="text">Имя пользователя:</label>
+   <?php  
     if(isset($_POST['username']) && !empty($_POST['username'])){
     ?>
-    <input type="username" id="username" name="username" value="<?=$_POST['username']?>"><br>
+    <input type="text" id="username" name="username" value="<?=$_POST['username']?>"><br>
     <?php  
   }
   else{
     ?>
-    <input type="username" id="username" name="username" required><br>
+    <input type="text" id="username" name="username" required><br>
     <?php 
     } ?>
-    <?php
-if (!empty($error_message)) {
-  if($error_message == "<h5>Такого пользователя нет!</h5>") echo "$error_message";
-}
-?>
-<br>
+    <?php  
+    if (!empty($error_message)) { 
+    if($error_message == "<h6>Такой логин уже существует!</h6>") echo "$error_message";
+  }
+    ?>
+    <label for="email">Email:</label>
+   <?php  
+    if(isset($_POST['email']) && !empty($_POST['email'])){
+    ?>
+    <input type="email" id="email" name="email" value="<?=$_POST['email']?>"><br>
+    <?php  
+  }
+  else{
+    ?>
+    <input type="email" id="email" name="email" required><br>
+    <?php 
+    } ?>
+    
     <label for="password">Пароль:</label>
     <?php  
     if(isset($_POST["pass"]) && !empty($_POST['pass'])){
@@ -181,17 +194,28 @@ if (!empty($error_message)) {
     <input type="password" id="password" name="pass" required><br>
     <?php 
     } ?>
-    <?php 
-    if (!empty($error_message)) { 
-    if($error_message == "<h5>Неверный пароль!</h5>") echo "$error_message";
-  }
+
+    <label for="confirm password">Подтвердите пароль:</label>
+   <?php  
+    if(isset($_POST['cp']) && !empty($_POST['cp'])){
     ?>
-    <br>
-     <input type="submit" class="btn head-btn1" value="Login">
-      <a href='signin.php' class='btn head-btn2'>Register</a><br><br>
-      <h6><a href="#">Забыли пароль?</a></h6>
+    <input type="password" id="cp" name="cp" value="<?=$_POST['cp']?>"><br>
+    <?php  
+  }
+  else{
+    ?>
+    <input type="password" id="cp" name="cp" required><br>
+    <?php 
+    } ?>
+    <?php  
+    if (!empty($error_message)) { 
+    if($error_message == "<h6>Неверное подтверждение пароля!</h6>") echo "$error_message";
+  }
+    ?><br>
+     <input type="submit" class="btn head-btn1" value="Register">
+        <a href='signin.php' class='btn head-btn2'>Login</a>
   </form>
-  </div>
+</div>
   <br><br>
     <footer>
         <!-- Footer Start-->

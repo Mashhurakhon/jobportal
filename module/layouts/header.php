@@ -44,8 +44,8 @@
                                    }
                                    else{
                                     echo "<div class='header-btn d-none f-right d-lg-block'>";
-                                       echo "<a href='signin.php' class='btn head-btn1'>Register</a>";
-                                   echo "<a href='signup.php' class='btn head-btn2'>Login</a></div>";
+                                       echo "<a href='signup.php' class='btn head-btn1'>Register</a>";
+                                   echo "<a href='signin.php' class='btn head-btn2'>Login</a></div>";
                                    }
                                    ?>
                     </div>

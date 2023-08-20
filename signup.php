@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect('localhost','root','', 'mydb');
+$conn = mysqli_connect('localhost','root','', 'employment');
   if(isset($_POST["username"]) && !empty($_POST['username'])  && isset($_POST["pass"]) && !empty($_POST["pass"])){
   $name=$_POST['username'];
   $pass = $_POST['pass'];

@@ -6,7 +6,7 @@
                 <div class="col-lg-3 col-md-2">
                     <!-- Logo -->
                     <div class="logo">
-                        <a href="index.html"><img src="assets/img/logo/logo02.png" alt="" width=150 height=160></a>
+                        <a href="index.php"><img src="assets/img/logo/logo02.png" alt="" width=150 height=160></a>
                     </div>  
                 </div>
                 <div class="col-lg-9 col-md-9">
@@ -30,11 +30,24 @@
                                 </ul>
                             </nav>
                         </div>          
-                        <!-- Header-btn -->
-                        <div class="header-btn d-none f-right d-lg-block">
-                            <a href="#" class="btn head-btn1">Register</a>
-                            <a href="#" class="btn head-btn2">Login</a>
-                        </div>
+                        <?php  
+                        session_start();
+                                   if (isset($_SESSION["username"]) && !empty($_SESSION["username"])) {
+                                       echo "
+                                       <div class='main-menu'>
+                                    <nav class='d-none d-lg-block'>
+                                        <ul id='navigation'>
+                                            <li><a href='profile.php'>{$_SESSION["username"]}</a></li>
+                                            <li><a href='1.php'>Out</a></li>
+                                            </ul></div></div>";
+                                       
+                                   }
+                                   else{
+                                    echo "<div class='header-btn d-none f-right d-lg-block'>";
+                                       echo "<a href='signup.php' class='btn head-btn1'>Register</a>";
+                                   echo "<a href='signin.php' class='btn head-btn2'>Login</a></div>";
+                                   }
+                                   ?>
                     </div>
                 </div>
                 <!-- Mobile Menu -->
